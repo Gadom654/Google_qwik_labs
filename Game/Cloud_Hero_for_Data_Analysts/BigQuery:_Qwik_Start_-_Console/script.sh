@@ -12,11 +12,14 @@ bq load \
     babynames.names_2014 \
     gs://spls/gsp072/baby-names/yob2014.txt \
     name:string,gender:string,count:integer
-bq query --use_legacy_sql=false \
-'SELECT
- name, count
+bq query --use_legacy_sql=false <<EOF
+SELECT
+  name, count
 FROM
- `babynames.names_2014`
+  \`babynames.names_2014\`
 WHERE
- gender = 'M'
-ORDER BY count DESC LIMIT 5;'
+  gender = 'M'
+ORDER BY
+  count DESC
+LIMIT 5
+EOF
