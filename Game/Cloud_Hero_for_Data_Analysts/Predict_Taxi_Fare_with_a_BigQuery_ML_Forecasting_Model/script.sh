@@ -1,7 +1,6 @@
 #!/bin/bash
 MY_PROJECT=$(gcloud config get-value project)
-bq query --use_legacy_sql=false <<EOF
-SELECT
+bq query --use_legacy_sql=false 'SELECT
   TIMESTAMP_TRUNC(pickup_datetime,
     MONTH) month,
   COUNT(*) trips
@@ -30,10 +29,8 @@ WHERE
 GROUP BY
   1
 ORDER BY
-  1
-EOF
-bq query --use_legacy_sql=false <<EOF
-WITH params AS (
+  1'
+bq query --use_legacy_sql=false 'WITH params AS (
     SELECT
     1 AS TRAIN,
     2 AS EVAL
@@ -60,11 +57,9 @@ WITH params AS (
   )
 
   SELECT *
-  FROM taxitrips
-EOF
+  FROM taxitrips'
 bq mk --dataset --location=US taxi
-bq query --use_legacy_sql=false <<EOF
-CREATE or REPLACE MODEL taxi.taxifare_model
+bq query --use_legacy_sql=false 'CREATE or REPLACE MODEL taxi.taxifare_model
 OPTIONS
   (model_type='linear_reg', labels=['total_fare']) AS
 
@@ -95,6 +90,5 @@ WITH params AS (
   )
 
   SELECT *
-  FROM taxitrips
-EOF
+  FROM taxitrips'
 echo "Do 6th and 7th manualy"
