@@ -28,7 +28,7 @@ GROUP BY
   timestamp
 ORDER BY
   timestamp DESC,
-  stn ASC'
+  stn ASC' &
 bq query --use_legacy_sql=false \
 'SELECT
   EXTRACT(YEAR
@@ -42,7 +42,7 @@ GROUP BY
   year,
   complaint_type
 ORDER BY
-  num_complaints DESC'
+  num_complaints DESC' &
 bq mk demos
 bq query --use_legacy_sql=false --destination_table=demos.nyc_weather --allow_large_results \
 'SELECT
@@ -115,7 +115,7 @@ HAVING
   ABS(corr_pct) > 0.5 AND
   data_count > 5
 ORDER BY
-  ABS(corr_pct) DESC'
+  ABS(corr_pct) DESC' &
 bq query --use_legacy_sql=false \
 'SELECT
   descriptor,
@@ -169,4 +169,4 @@ HAVING
   ABS(corr_pct) > 0.5 AND
   data_count > 5
 ORDER BY
-  ABS(corr_pct) DESC'
+  ABS(corr_pct) DESC' &
